@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ggd6rliykcrp"]
+[gd_scene load_steps=4 format=3 uid="uid://ggd6rliykcrp"]
 
+[ext_resource type="Script" uid="uid://bxrt7so27a74q" path="res://jeff.gd" id="1_ewpx7"]
 [ext_resource type="Texture2D" uid="uid://q6h5rxblnfhe" path="res://icon.svg" id="1_toc0c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_toc0c"]
 size = Vector2(98, 97)
 
 [node name="Jeff" type="CharacterBody2D"]
+script = ExtResource("1_ewpx7")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_toc0c")
