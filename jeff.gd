@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 var speed = 300.0
-var jump_height = -500.0
+var jump_height = -550.0
 var can_shark_mode = true
 var in_shark_mode = false
 var on_wall = false
@@ -26,7 +26,7 @@ func _physics_process(delta: float) -> void:
 
 	var direction_on_wall := Input.get_axis("up", "down")
 
-	if direction_on_wall:
+	if direction_on_wall and is_on_wall() and in_shark_mode:
 		velocity.y = direction_on_wall * speed
 		move_and_slide()
 
@@ -39,25 +39,39 @@ func _physics_process(delta: float) -> void:
 
 	elif not is_on_wall() and not in_shark_mode:
 		on_wall = false
+	elif not is_on_wall() and in_shark_mode:
+		on_wall = false
+	#if not is_on_wall() and not is_on_ceiling() and not is_on_floor() and in_shark_mode:
+		#print("AHH")
+		#await get_tree().create_timer(1).timeout
+		#exit_shark_mode()
 	
 func jump():
-	velocity.y = jump_height
+	if is_on_floor():
+		velocity.y = jump_height
 	
 func enter_shark_mode():
+	
 	can_shark_mode = false
 	in_shark_mode = true
 	speed = 800
-	scale.y = 0.2
+	scale.y = 0.6
+	scale.x = 0.2
 	$SharkModeDur.start()
 	
 	
 func exit_shark_mode():
+	#print("exited")
 	jump()
+	on_wall = false
 	in_shark_mode = false
 	can_shark_mode = true
 	speed = 500
 	scale.y = 1.0
+	scale.x = 1.0
 
 
 func _on_shark_mode_dur_timeout() -> void:
+	print("extied")
 	exit_shark_mode()
+	$SharkModeDur.stop()
