@@ -31,4 +31,8 @@ wait_time = 3.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+[node name="FallTimer" type="Timer" parent="."]
+wait_time = 0.55
+
 [connection signal="timeout" from="SharkModeDur" to="." method="_on_shark_mode_dur_timeout"]
+[connection signal="timeout" from="FallTimer" to="." method="_on_fall_timer_timeout"]

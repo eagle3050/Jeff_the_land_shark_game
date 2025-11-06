@@ -41,10 +41,12 @@ func _physics_process(delta: float) -> void:
 		on_wall = false
 	elif not is_on_wall() and in_shark_mode:
 		on_wall = false
-	#if not is_on_wall() and not is_on_ceiling() and not is_on_floor() and in_shark_mode:
-		#print("AHH")
-		#await get_tree().create_timer(1).timeout
-		#exit_shark_mode()
+	if not is_on_wall() and not is_on_floor() and not is_on_ceiling() and in_shark_mode:
+		if not $FallTimer.is_stopped():
+			return
+		print("AHH")
+		$FallTimer.start()
+
 	
 func jump():
 	if is_on_floor():
@@ -72,6 +74,12 @@ func exit_shark_mode():
 
 
 func _on_shark_mode_dur_timeout() -> void:
-	print("extied")
-	exit_shark_mode()
-	$SharkModeDur.stop()
+	if in_shark_mode:
+		print("extied")
+		exit_shark_mode()
+		$SharkModeDur.stop()
+
+
+func _on_fall_timer_timeout() -> void:
+	if not is_on_wall() and not is_on_floor() and not is_on_ceiling() and in_shark_mode:
+		exit_shark_mode()
